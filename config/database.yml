@@ -78,6 +78,6 @@ test:
 #
 production:
   <<: *default
-  database: slm_production
-  username: sports_logo_maker
-  password: <%= ENV["SPORTS_LOGO_MAKER_DATABASE_PASSWORD"] %>
+  database: ysl_production
+  username: dev
+  password: <%= ENV["YOUTH_SPORTS_LOGO_DATABASE_PASSWORD"] %>
