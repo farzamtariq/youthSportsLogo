@@ -6,10 +6,14 @@
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
-    "yarn": "^1.22.21",
+    "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
     "esbuild": "^0.20.1",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "yarn": "^1.22.21"
   }
 }
