@@ -1,0 +1,76 @@
+
+<div class="my-4 py-6 relative overflow-hidden">
+<div class="flex carousel-wrapper">
+    <div class="carousel">
+    <!-- Images are initially repeated twice to create the infinite scroll effect -->
+    <% 2.times do %>
+        <% 4.times do |i| %>
+        <div class="w-1/4 p-2 slide">
+            <%= image_tag "#{i + 1}.jpeg", class: 'h-auto max-w-full rounded-lg' %>
+        </div>
+        <% end %>  
+    <% end %>
+    </div>
+</div>
+</div>
+
+
+<style>
+.carousel-wrapper {
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  flex: 0 0 25%;
+}
+</style>
+
+<script>
+    function initializeInfiniteScroll() {
+    const carousel = document.querySelector('.carousel');
+    let isResetting = false;
+
+    // Clone initial slides to start the infinite loop
+    document.querySelectorAll('.slide').forEach(slide => {
+        const clone = slide.cloneNode(true);
+        carousel.appendChild(clone);
+    });
+
+    const updateCarousel = () => {
+        if (isResetting) return;
+
+        let currentTransform = parseFloat(getComputedStyle(carousel).transform.split(',')[4] || 0);
+        const maxScrollLeft = carousel.scrollWidth / 2;
+
+        if (Math.abs(currentTransform) >= maxScrollLeft) {
+        // Begin resetting process
+        isResetting = true;
+        // Instantly reset the transform with no visible jump
+        carousel.style.transition = 'none';
+        carousel.style.transform = 'translateX(0)';
+        // Force a reflow to apply the transform immediately
+        carousel.offsetWidth;
+        // After reset, restart the scrolling with transition
+        setTimeout(() => {
+            carousel.style.transition = 'transform 0.5s ease';
+            isResetting = false;
+            requestAnimationFrame(updateCarousel);
+        }, 20); // Short delay to ensure the transition reset applies smoothly
+        } else {
+        const speed = 25; // Adjust speed here
+        currentTransform -= speed;
+        carousel.style.transform = `translateX(${currentTransform}px)`;
+        requestAnimationFrame(updateCarousel);
+        }
+    };
+
+    requestAnimationFrame(updateCarousel);
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeInfiniteScroll);
+</script>
